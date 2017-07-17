@@ -1,5 +1,6 @@
 package com.AlexNewg.youtube.controller;
 
+import com.AlexNewg.youtube.console.ui.ConsoleMessages;
 import com.AlexNewg.youtube.console.ui.State;
 import com.AlexNewg.youtube.console.ui.WrongNameException;
 import com.AlexNewg.youtube.logic.ContactLogic;
@@ -7,22 +8,7 @@ import com.AlexNewg.youtube.model.Contact;
 
 import static com.AlexNewg.youtube.console.ui.State.*;
 
-/**
- * Created by Alex on 16.07.2017.
- */
-public class ContactController {
-
-    private static final String MENU = "Choose one of the following:" + "\n" +
-            " 1. Create a new contact " + "\n" +
-            " 2. Change the name of a contact " + "\n" +
-            " 3. Change the description of a contact " + "\n" +
-            " 4. Delete an existing contact " + "\n" +
-            " 5. Add a group to an existing contact " + "\n" +
-            " 6. Delete a group from a contact " + "\n" +
-            " 7. Show detailed info about contact " + "\n" +
-            " 8. Show all contacts " + "\n" +
-            " 9. Show all contacts with specific group" + "\n" +
-            " 0. Main menu";
+public class ContactController implements IController {
 
     private ContactLogic contactLogic;
 
@@ -59,50 +45,50 @@ public class ContactController {
     }
 
     private State showAllContactWithSpecificGroupMenu() {
-        System.out.println("Choose the name of a group, which members you want to see");
+        System.out.println(ConsoleMessages.SHOW_ALL_MEMBERS_OF_A_GROUP);
         printAllContacts();
         return SHOW_ALL_MEMBERS_OF_A_GROUP;
     }
 
     private State showDeleteGroupFromContactMenu() {
-        System.out.println("Choose the name of a contact, then after space the group you want to delete");
+        System.out.println(ConsoleMessages.REMOVE_GROUP_FROM_CONTACT);
         printAllContacts();
         return REMOVE_GROUP_FROM_CONTACT;
     }
 
 
     private State showAddingGroupToContactMenu() {
-        System.out.println("Choose the name of a contact, then after space type what group to add for it");
+        System.out.println(ConsoleMessages.ADD_GROUP_TO_CONTACT);
         printAllContacts();
         return ADD_GROUP_TO_CONTACT;
     }
 
     private State showDeleteContactMenu() {
-        System.out.println("Choose the name of a contact you want to delete: ");
+        System.out.println(ConsoleMessages.DELETE_CONTACT);
         printAllContacts();
 
         return DELETE_CONTACT;
     }
 
     private State showUpdateContactDescriptionMenu() {
-        System.out.println("Choose the name of a contact, which description you would like to update and put a new description after a space: ");
+        System.out.println(ConsoleMessages.UPDATE_CONTACT_DESCRIPTION);
         printAllContacts();
         return UPDATE_CONTACT_DESCRIPTION;
     }
 
     private State showUpdateContactNameMenu() {
-        System.out.println("Choose the name of a contact you would like to update and put a new name after a space: ");
+        System.out.println(ConsoleMessages.UPDATE_CONTACT_NAME);
         printAllContacts();
         return UPDATE_CONTACT_NAME;
     }
 
     private State showCreateContactMenu() {
-        System.out.println("Input new contact name and description, splitted my a space");
+        System.out.println(ConsoleMessages.CREATE_CONTACT);
         return CREATE_CONTACT;
     }
 
     private State showDetailedContactMenu() {
-        System.out.println("Choose the name of a contact you would like to see in details");
+        System.out.println(ConsoleMessages.DETAILED_CONTACT);
         printAllContacts();
         return DETAILED_CONTACT;
     }
@@ -114,7 +100,7 @@ public class ContactController {
     }
 
     public void showMenu() {
-        System.out.println(MENU);
+        System.out.println(ConsoleMessages.CONTACT_MENU);
     }
 
     public State showDetailedContact(String name) {

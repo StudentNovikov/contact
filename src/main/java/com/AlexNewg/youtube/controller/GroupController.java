@@ -1,5 +1,6 @@
 package com.AlexNewg.youtube.controller;
 
+import com.AlexNewg.youtube.console.ui.ConsoleMessages;
 import com.AlexNewg.youtube.console.ui.State;
 import com.AlexNewg.youtube.console.ui.WrongNameException;
 import com.AlexNewg.youtube.logic.GroupLogic;
@@ -9,17 +10,7 @@ import java.util.Scanner;
 
 import static com.AlexNewg.youtube.console.ui.State.*;
 
-/**
- * Created by Alex on 16.07.2017.
- */
-public class GroupController {
-
-    private final String MENU = "Choose one of the following:" + "\n" +
-            " 1. Show all groups " + "\n" +
-            " 2. Create a new group " + "\n" +
-            " 3. Delete an existing group " + "\n" +
-            " 4. Update an existing group" + "\n" +
-            " 0. Main menu ";
+public class GroupController implements IController{
 
     private GroupLogic groupLogic;
 
@@ -28,7 +19,7 @@ public class GroupController {
     }
 
     public void showMenu() {
-        System.out.println(MENU);
+        System.out.println(ConsoleMessages.GROUP_MENU);
     }
 
     public State processInput(String input) {
@@ -49,19 +40,19 @@ public class GroupController {
     }
 
     private State showUpdateGroupMenu() {
-        System.out.println("Choose the name of a group you would like to update and put a new name after a space: ");
+        System.out.println(ConsoleMessages.UPDATE_GROUP);
         printAllGroups();
         return UPDATE_GROUP;
     }
 
     private State showDeleteGroupMenu() {
-        System.out.println("Choose the name of a group you would like to delete: ");
+        System.out.println(ConsoleMessages.DELETE_GROUP);
         printAllGroups();
         return DELETE_GROUP;
     }
 
     private State showCreateGroupMenu() {
-        System.out.println("Input new group name");
+        System.out.println(ConsoleMessages.CREATE_GROUP);
         return CREATE_GROUP;
     }
 
