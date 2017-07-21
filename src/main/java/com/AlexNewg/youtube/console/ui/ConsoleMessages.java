@@ -29,7 +29,7 @@ public final class ConsoleMessages {
     public static final String SHOW_ALL_MEMBERS_OF_A_GROUP = "Choose the name of a group, which members you want to see";
     public static final String REMOVE_GROUP_FROM_CONTACT = "Choose the name of a contact, then after space the group you want to delete";
     public static final String ADD_GROUP_TO_CONTACT = "Choose the name of a contact, then after space type what group to add for it";
-    public static final String DELETE_CONTACT = "Choose the name of a contact, then after space the group you want to delete";
+    public static final String DELETE_CONTACT = "Choose the name of a contact you want to delete";
     public static final String UPDATE_CONTACT_DESCRIPTION = "Choose the name of a contact, which description you would like to update and put a new description after a space: ";
     public static final String UPDATE_CONTACT_NAME = "Choose the name of a contact you would like to update and put a new name after a space: ";
     public static final String CREATE_CONTACT = "Input new contact name and description, split by a space";

@@ -3,16 +3,18 @@ package com.AlexNewg.youtube.logic;
 
 import com.AlexNewg.youtube.console.ui.WrongNameException;
 import com.AlexNewg.youtube.dao.ContactDao;
+import com.AlexNewg.youtube.dao.ContactDaoFactory;
 import com.AlexNewg.youtube.model.Contact;
 
 import java.util.List;
 
 public class ContactLogic {
 
-    private ContactDao service;
+    private ContactDaoFactory contactDaoFactory = new ContactDaoFactory();
+    private ContactDao service = (ContactDao) contactDaoFactory.createDao();
 
     public ContactLogic() {
-        service = new ContactDao();
+
     }
 
     public void createContact(String data) throws WrongNameException {
@@ -21,7 +23,6 @@ public class ContactLogic {
         String description = data.substring(splited[0].length() + 1, data.length());
         validateContactName(name);
         service.create(new Contact(name, description));
-
     }
 
     private void validateContactName(String name) throws WrongNameException {

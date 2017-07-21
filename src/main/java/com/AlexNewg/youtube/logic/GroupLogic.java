@@ -3,16 +3,18 @@ package com.AlexNewg.youtube.logic;
 
 import com.AlexNewg.youtube.console.ui.WrongNameException;
 import com.AlexNewg.youtube.dao.GroupDao;
+import com.AlexNewg.youtube.dao.GroupDaoFactory;
 import com.AlexNewg.youtube.model.Group;
 
 import java.util.List;
 
 public class GroupLogic {
 
-    private GroupDao service;
+    private GroupDaoFactory groupDaoFactory = new GroupDaoFactory();
+    private GroupDao service = (GroupDao) groupDaoFactory.createDao();
 
     public GroupLogic() {
-        service = new GroupDao();
+
     }
 
     public List<Group> getAllGroups() {
@@ -39,6 +41,6 @@ public class GroupLogic {
         String oldName = splited[0];
         String newName = splited[1];
         validateGroupName(newName);
-        service.update(oldName,newName);
+        service.update(oldName, newName);
     }
 }
