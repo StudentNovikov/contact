@@ -9,9 +9,6 @@ import com.AlexNewg.youtube.logic.GroupLogic;
 
 import java.util.Scanner;
 
-/**
- * Created by Alex on 12.07.2017.
- */
 public class ConsoleUI {
 
 
@@ -22,9 +19,9 @@ public class ConsoleUI {
     private MemoryStorage memoryStorage;
 
     public ConsoleUI() {
-        memoryStorage = new MemoryStorage();
-        contactController = new ContactController(new ContactLogic(memoryStorage));
-        groupController = new GroupController(new GroupLogic(memoryStorage));
+        memoryStorage = MemoryStorage.getInstance();
+        contactController = new ContactController(new ContactLogic());
+        groupController = new GroupController(new GroupLogic());
     }
 
     public void start() {

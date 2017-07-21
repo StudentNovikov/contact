@@ -11,17 +11,25 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Alex on 12.07.2017.
- */
 public class MemoryStorage {
 
-    List<Contact> allContacts = new ArrayList<>();
-    List<Group> allGroups = new ArrayList<>();
+    private static MemoryStorage Instance;
 
-    public MemoryStorage() {
+    private MemoryStorage() {
         initStartingData();
     }
+
+    public static MemoryStorage getInstance() {
+        if (Instance == null) {
+            Instance = new MemoryStorage();
+        }
+        return Instance;
+    }
+
+
+    private List<Contact> allContacts = new ArrayList<>();
+    private List<Group> allGroups = new ArrayList<>();
+
 
     private void initStartingData() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("storage.dat"))) {
@@ -41,39 +49,39 @@ public class MemoryStorage {
     }
 
     public int getMaxGroupId() {
-        if (allGroups.isEmpty()){
+        if (allGroups.isEmpty()) {
             return 1;
         }
         return allGroups.get(allGroups.size() - 1).getId() + 1;
     }
 
     public int getMaxContactId() {
-        if (allContacts.isEmpty()){
+        if (allContacts.isEmpty()) {
             return 1;
         }
         return allContacts.get(allContacts.size() - 1).getId() + 1;
     }
 
-    public int createGroup(Group group) {
+    public void createGroup(Group group) {
         group.setId(getMaxGroupId());
         allGroups.add(group);
-        return getMaxGroupId();
+
     }
 
-    public void deleteGroup(Group group) {
+    public void deleteGroup(String name) {
 
         for (int i = 0; i < allGroups.size(); i++) {
-            if (allGroups.get(i).getName().equals(group.getName())) {
+            if (allGroups.get(i).getName().equals(name)) {
                 allGroups.remove(i--);
             }
         }
     }
 
-    public void updateGroup(Group groupOld, Group groupNew) {
+    public void updateGroup(String oldName, String newName) {
 
         for (int i = 0; i < allGroups.size(); i++) {
-            if (allGroups.get(i).getName().equals(groupOld.getName())) {
-                allGroups.get(i).setName(groupNew.getName());
+            if (allGroups.get(i).getName().equals(oldName)) {
+                allGroups.get(i).setName(newName);
             }
         }
     }

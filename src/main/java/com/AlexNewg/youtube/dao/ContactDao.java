@@ -6,18 +6,11 @@ import com.AlexNewg.youtube.model.Contact;
 
 import java.util.List;
 
-/**
- * Created by Alex on 12.07.2017.
- */
-public class ContactService {
+public class ContactDao implements IDao<Contact> {
 
-    private final MemoryStorage storage;
+    private final MemoryStorage storage = MemoryStorage.getInstance();
 
-    public ContactService(MemoryStorage memoryStorage) {
-        this.storage = memoryStorage;
-    }
-
-    public List<Contact> GetAllContacts() {
+    public List<Contact> getAll() {
         return storage.getAllContacts();
     }
 
@@ -25,11 +18,11 @@ public class ContactService {
         return storage.getContactByName(name);
     }
 
-    public void createContact(Contact contact) {
+    public void create(Contact contact) {
         storage.createContact(contact);
     }
 
-    public void updateContactName(String oldName, String newName) {
+    public void update(String oldName, String newName) {
         storage.updateContactName(oldName, newName);
     }
 
@@ -37,7 +30,7 @@ public class ContactService {
         storage.updateContactDescription(name, description);
     }
 
-    public void deleteContact(String name) {
+    public void delete(String name) {
         storage.deleteContact(name);
     }
 

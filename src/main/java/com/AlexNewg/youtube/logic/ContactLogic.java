@@ -2,21 +2,17 @@ package com.AlexNewg.youtube.logic;
 
 
 import com.AlexNewg.youtube.console.ui.WrongNameException;
-import com.AlexNewg.youtube.dao.ContactService;
-import com.AlexNewg.youtube.dao.MemoryStorage;
+import com.AlexNewg.youtube.dao.ContactDao;
 import com.AlexNewg.youtube.model.Contact;
 
 import java.util.List;
 
-/**
- * Created by Alex on 12.07.2017.
- */
 public class ContactLogic {
 
-    private ContactService service;
+    private ContactDao service;
 
-    public ContactLogic(MemoryStorage memoryStorage) {
-        service = new ContactService(memoryStorage);
+    public ContactLogic() {
+        service = new ContactDao();
     }
 
     public void createContact(String data) throws WrongNameException {
@@ -24,20 +20,18 @@ public class ContactLogic {
         String name = splited[0];
         String description = data.substring(splited[0].length() + 1, data.length());
         validateContactName(name);
-        service.createContact(new Contact(name, description));
+        service.create(new Contact(name, description));
 
     }
 
     private void validateContactName(String name) throws WrongNameException {
-        if ((name.length() < 40) && (name.length() > 0)) {
-            return;
-        } else {
+        if (!(name.length() < 40) && (name.length() > 0)) {
             throw new WrongNameException("wrong name: [" + name + "] it is too big");
         }
     }
 
     public void deleteContact(String name) {
-        service.deleteContact(name);
+        service.delete(name);
     }
 
     public void addGroupInContact(String data) {
@@ -63,7 +57,7 @@ public class ContactLogic {
     }
 
     public List<Contact> getAllContacts() {
-        return service.GetAllContacts();
+        return service.getAll();
     }
 
     public void updateContactName(String names) throws WrongNameException {
@@ -71,7 +65,7 @@ public class ContactLogic {
         String oldName = splited[0];
         String newName = splited[1];
         validateContactName(newName);
-        service.updateContactName(oldName, newName);
+        service.update(oldName, newName);
     }
 
     public void updateContactDescription(String data) {
