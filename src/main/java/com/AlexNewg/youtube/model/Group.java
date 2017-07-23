@@ -2,14 +2,11 @@ package com.AlexNewg.youtube.model;
 
 import java.io.Serializable;
 
-/**
- * Created by Alex on 11.07.2017.
- */
 public class Group implements Serializable {
     private int Id;
     private String name;
 
-    public Group(String name) {
+    Group(String name) {
         setName(name);
     }
 

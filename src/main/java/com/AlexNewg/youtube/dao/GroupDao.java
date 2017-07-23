@@ -8,21 +8,43 @@ import java.util.List;
 public class GroupDao implements IDao<Group> {
 
     private final MemoryStorage storage = MemoryStorage.getInstance();
+    private List<Group> allGroups = storage.getAllGroups();
 
     public List<Group> getAll() {
-        return storage.getAllGroups();
+        return allGroups;
     }
 
     public void update(String oldName, String newName) {
-        storage.updateGroup(oldName, newName);
+
+        for (int i = 0; i < allGroups.size(); i++) {
+            if (allGroups.get(i).getName().equals(oldName)) {
+                allGroups.get(i).setName(newName);
+            }
+        }
     }
 
     public void create(Group group) {
-        storage.createGroup(group);
+
+        group.setId(getMaxGroupId());
+        allGroups.add(group);
+
     }
 
+    private int getMaxGroupId() {
+        if (allGroups.isEmpty()) {
+            return 1;
+        }
+        return allGroups.get(allGroups.size() - 1).getId() + 1;
+    }
+
+
     public void delete(String name) {
-        storage.deleteGroup(name);
+
+        for (int i = 0; i < allGroups.size(); i++) {
+            if (allGroups.get(i).getName().equals(name)) {
+                allGroups.remove(i--);
+            }
+        }
 
     }
 

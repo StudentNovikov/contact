@@ -1,6 +1,4 @@
-package com.AlexNewg.youtube.model; /**
- * Created by Alex on 11.07.2017.
- */
+package com.AlexNewg.youtube.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ public class Contact implements Serializable{
     private String description;
     private List<Group> groups;
 
-    public Contact(String name, String description) {
+    Contact(String name, String description) {
         setName(name);
         setDescription(description);
         groups = new ArrayList<>();

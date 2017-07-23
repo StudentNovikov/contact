@@ -1,5 +1,12 @@
 package com.AlexNewg.youtube.dao;
 
-interface DaoFactory {
-    IDao createDao();
+public class DaoFactory {
+
+    public IDao createContactDao() {
+        return new ContactDao();
+    }
+
+    public IDao createGroupDao() {
+        return new GroupDao();
+    }
 }

@@ -1,29 +1,25 @@
-package com.AlexNewg.youtube.logic;
+package com.AlexNewg.youtube.model;
 
 
-import com.AlexNewg.youtube.console.ui.WrongNameException;
+import com.AlexNewg.youtube.dao.DaoFactory;
+import com.AlexNewg.youtube.view.WrongNameException;
 import com.AlexNewg.youtube.dao.GroupDao;
-import com.AlexNewg.youtube.dao.GroupDaoFactory;
 import com.AlexNewg.youtube.model.Group;
 
 import java.util.List;
 
 public class GroupLogic {
 
-    private GroupDaoFactory groupDaoFactory = new GroupDaoFactory();
-    private GroupDao service = (GroupDao) groupDaoFactory.createDao();
-
-    public GroupLogic() {
-
-    }
+    private DaoFactory daoFactory = new DaoFactory();
+    private GroupDao groupDao = (GroupDao) daoFactory.createGroupDao();
 
     public List<Group> getAllGroups() {
-        return service.getAll();
+        return groupDao.getAll();
     }
 
     public void createGroup(String name) throws WrongNameException {
         validateGroupName(name);
-        service.create(new Group(name));
+        groupDao.create(new Group(name));
     }
 
     private void validateGroupName(String name) throws WrongNameException {
@@ -33,7 +29,7 @@ public class GroupLogic {
     }
 
     public void deleteGroup(String name) {
-        service.delete(name);
+        groupDao.delete(name);
     }
 
     public void updateGroup(String names) throws WrongNameException {
@@ -41,6 +37,6 @@ public class GroupLogic {
         String oldName = splited[0];
         String newName = splited[1];
         validateGroupName(newName);
-        service.update(oldName, newName);
+        groupDao.update(oldName, newName);
     }
 }
