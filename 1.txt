@@ -1,7 +1,5 @@
 All contacts:
-Contact id : 1 , name : Alex , groups :  job , description : this is me actually
-Contact id : 2 , name : Josh , groups :  friend , description : he likes csgo
-Contact id : 3 , name : Mika , groups :  friend , description : she is lovely and i am ugly
-Contact id : 4 , name : SuperRazor , groups :  job , description : he needs a new haircut
-Contact id : 5 , name : Regina , groups :  job , description : yep, Dubovicki here
-Contact id : 6 , name : Brandon , groups :  family , description : an average guy
+Contact id : 1 , name : Alex , groups :  friend , description : this is me actually, hello!
+Contact id : 2 , name : Regina , groups :  family job , description : yep, she is Dubovicki
+Contact id : 3 , name : Mika , groups :  job , description : pika chinpokomon
+Contact id : 4 , name : Jennifer , groups :  friend , description : Connelly?

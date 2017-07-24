@@ -1,6 +1,6 @@
 package com.AlexNewg.youtube.view;
 
-public final class ConsoleMessages {
+final class ConsoleMessages {
 
     static final String FULL_MENU = "Choose one of the following:" + "\n" +
             " 1. Show all contacts " + "\n" +
@@ -18,20 +18,20 @@ public final class ConsoleMessages {
             " 13. Update an existing group" + "\n" +
             " 0. Exit ";
 
-    public static final String SHOW_ALL_MEMBERS_OF_A_GROUP = "Choose the name of a group, which members you want to see";
-    public static final String REMOVE_GROUP_FROM_CONTACT = "Choose the name of a contact, then after space the group you want to delete";
-    public static final String ADD_GROUP_TO_CONTACT = "Choose the name of a contact, then after space type what group to add for it";
-    public static final String DELETE_CONTACT = "Choose the name of a contact you want to delete";
-    public static final String UPDATE_CONTACT_DESCRIPTION = "Choose the name of a contact, which description you would like to update and put a new description after a space: ";
-    public static final String UPDATE_CONTACT_NAME = "Choose the name of a contact you would like to update and put a new name after a space: ";
-    public static final String CREATE_CONTACT = "Input new contact name and description, split by a space";
-    public static final String DETAILED_CONTACT = "Choose the name of a contact you would like to see in details";
-    public static final String UPDATE_GROUP = "Choose the name of a group you would like to update and put a new name after a space: ";
-    public static final String DELETE_GROUP = "Choose the name of a group you would like to delete: ";
-    public static final String CREATE_GROUP = "Input new group name";
+    static final String SHOW_ALL_MEMBERS_OF_A_GROUP = "Choose the name of a group, which members you want to see";
+    static final String REMOVE_GROUP_FROM_CONTACT = "Choose the name of a contact, then after space the group you want to delete";
+    static final String ADD_GROUP_TO_CONTACT = "Choose the name of a contact, then after space type what group to add for it";
+    static final String DELETE_CONTACT = "Choose the name of a contact you want to delete";
+    static final String UPDATE_CONTACT_DESCRIPTION = "Choose the name of a contact, which description you would like to update and put a new description after a space: ";
+    static final String UPDATE_CONTACT_NAME = "Choose the name of a contact you would like to update and put a new name after a space: ";
+    static final String CREATE_CONTACT = "Input new contact name and description, split by a space";
+    static final String DETAILED_CONTACT = "Choose the name of a contact you would like to see in details";
+    static final String UPDATE_GROUP = "Choose the name of a group you would like to update and put a new name after a space: ";
+    static final String DELETE_GROUP = "Choose the name of a group you would like to delete: ";
+    static final String CREATE_GROUP = "Input new group name";
     static final String FINISHED = "Thanks for using our app";
-    public static final String SHOW_ALL_CONTACTS = "All contacts: ";
-    public static final String SHOW_ALL_GROUPS = "All groups: ";
+    static final String SHOW_ALL_CONTACTS = "All contacts: ";
+    static final String SHOW_ALL_GROUPS = "All groups: ";
 
 
 }

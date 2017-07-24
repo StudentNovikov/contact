@@ -18,8 +18,8 @@ public class ObserverOperator implements Subject {
 
     @Override
     public void notifyObserver() {
-        for(Observer observer : observers){
-             observer.update();
+        for (Observer observer : observers) {
+            observer.update();
         }
     }
 

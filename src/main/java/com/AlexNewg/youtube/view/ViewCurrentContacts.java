@@ -1,21 +1,19 @@
 package com.AlexNewg.youtube.view;
 
+import com.AlexNewg.youtube.dao.ContactDao;
 import com.AlexNewg.youtube.model.Contact;
-import com.AlexNewg.youtube.model.ContactLogic;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 
+public class ViewCurrentContacts implements Observer {
 
-public class ViewCurrentContacts implements Observer{
-
-    private ContactLogic contactLogic = new ContactLogic();
+    private ContactDao contactDao = new ContactDao();
     private static int observerIDTracker = 0;
 
 
-
-    public ViewCurrentContacts(Subject observerOperator){
+    public ViewCurrentContacts(Subject observerOperator) {
 
         int observerID = ++observerIDTracker;
 
@@ -26,26 +24,26 @@ public class ViewCurrentContacts implements Observer{
     }
 
 
-    public void update(){
+    public void update() {
 
         String filePath = "1.txt";
-        writeInFile(filePath,allContactsToString());
+        writeInFile(filePath, allContactsToString());
 
         Runtime rt = Runtime.getRuntime();
-        try{
-            rt.exec("notepad " + filePath);}
-        catch (Exception e){
+        try {
+            rt.exec("notepad " + filePath);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
     }
 
-   private void writeInFile(String filePath, String message){
+    private void writeInFile(String filePath, String message) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(filePath));
             String updatedText = message.replaceAll("\n", System.lineSeparator());
-           writer.write(updatedText);
+            writer.write(updatedText);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,9 +57,9 @@ public class ViewCurrentContacts implements Observer{
         }
     }
 
-    private String allContactsToString(){
+    private String allContactsToString() {
         String result = "All contacts:";
-        for (Contact contact : contactLogic.getAllContacts()) {
+        for (Contact contact : contactDao.getAll()) {
             result += "\n" + contact.toStringDetailed();
         }
         return result;

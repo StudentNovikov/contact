@@ -6,7 +6,7 @@ public class Group implements Serializable {
     private int Id;
     private String name;
 
-    Group(String name) {
+    public Group(String name) {
         setName(name);
     }
 

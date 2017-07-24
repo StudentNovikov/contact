@@ -1,7 +1,8 @@
 package com.AlexNewg.youtube.controller;
 
-import com.AlexNewg.youtube.model.ContactLogic;
-import com.AlexNewg.youtube.model.GroupLogic;
+import com.AlexNewg.youtube.dao.ContactDao;
+import com.AlexNewg.youtube.dao.DaoFactory;
+import com.AlexNewg.youtube.dao.GroupDao;
 import com.AlexNewg.youtube.model.Contact;
 import com.AlexNewg.youtube.model.Group;
 import com.AlexNewg.youtube.view.*;
@@ -9,11 +10,10 @@ import com.AlexNewg.youtube.view.*;
 public class Controller {
 
     private static Controller instance;
-    private View view = new View(instance);
-    private ContactLogic contactLogic = new ContactLogic();
-    private GroupLogic groupLogic = new GroupLogic();
-    private ObserverOperator observerOperator ;
-
+    private ObserverOperator observerOperator;
+    private DaoFactory daoFactory = new DaoFactory();
+    private ContactDao contactDao = (ContactDao) daoFactory.createContactDao();
+    private GroupDao groupDao = (GroupDao) daoFactory.createGroupDao();
 
     private Controller(ObserverOperator observerOperator) {
         this.observerOperator = observerOperator;
@@ -26,153 +26,132 @@ public class Controller {
         return instance;
     }
 
-    public void analyze(String input) {
-        switch (input) {
-            case "1":
-                System.out.println(ConsoleMessages.SHOW_ALL_CONTACTS);
-                printAllContacts();
-                break;
-            case "2":
-                System.out.println(ConsoleMessages.SHOW_ALL_GROUPS);
-                printAllGroups();
-                break;
-            case "3":
-                System.out.println(ConsoleMessages.UPDATE_CONTACT_DESCRIPTION);
-                printAllContacts();
-                updateContactDescription(view.readConsoleString());
-                observerOperator.notifyObserver();
-                break;
-            case "4":
-                System.out.println(ConsoleMessages.DELETE_CONTACT);
-                printAllContacts();
-                deleteContact(view.readConsoleString());
-                observerOperator.notifyObserver();
-                break;
-            case "5":
-                System.out.println(ConsoleMessages.ADD_GROUP_TO_CONTACT);
-                printAllContacts();
-                addGroupToContact(view.readConsoleString());
-                observerOperator.notifyObserver();
-                break;
-            case "6":
-                System.out.println(ConsoleMessages.REMOVE_GROUP_FROM_CONTACT);
-                printAllContacts();
-                removeGroupFromContact(view.readConsoleString());
-                observerOperator.notifyObserver();
-                break;
-            case "7":
-                System.out.println(ConsoleMessages.DETAILED_CONTACT);
-                printAllContacts();
-                showDetailedContact(view.readConsoleString());
-                break;
-            case "8":
-                System.out.println(ConsoleMessages.CREATE_CONTACT);
-                createContact(view.readConsoleString());
-                observerOperator.notifyObserver();
-                break;
-            case "9":
-                System.out.println(ConsoleMessages.SHOW_ALL_MEMBERS_OF_A_GROUP);
-                printAllGroups();
-                showAllMembersOfAGroup(view.readConsoleString());
-                break;
-            case "10":
-                System.out.println(ConsoleMessages.UPDATE_CONTACT_NAME);
-                printAllContacts();
-                updateContactName(view.readConsoleString());
-                observerOperator.notifyObserver();
-                break;
-            case "11":
-                System.out.println(ConsoleMessages.CREATE_GROUP);
-                createGroup(view.readConsoleString());
-                break;
-            case "12":
-                System.out.println(ConsoleMessages.DELETE_GROUP);
-                deleteGroup(view.readConsoleString());
-                break;
-            case "13":
-                System.out.println(ConsoleMessages.UPDATE_GROUP);
-                updateGroup(view.readConsoleString());
-                break;
-        }
-
-    }
-
-    private void createContact(String name) {
+    public void createContact(String data) {
         try {
-            contactLogic.createContact(name);
+            String[] split = data.split(" ");
+            String name = split[0];
+            String description = data.substring(split[0].length() + 1, data.length());
+            validateContactName(name);
+            contactDao.create(new Contact(name, description));
+            observerOperator.notifyObserver();
         } catch (WrongNameException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void printAllContacts() {
-        for (Contact contact : contactLogic.getAllContacts()) {
+    public void printAllContacts() {
+        for (Contact contact : contactDao.getAll()) {
             System.out.println(contact.toString());
         }
     }
 
-    private void showDetailedContact(String name) {
+    public void showDetailedContact(String name) {
         try {
-            System.out.println(contactLogic.getContact(name).toStringDetailed());
+            if (contactDao.readContact(name) != null) {
+                System.out.println(contactDao.readContact(name).toStringDetailed());
+            } else {
+                throw new WrongNameException("There is no [ " + name + " ]");
+            }
         } catch (WrongNameException e) {
             System.out.println(e.getMessage());
         }
     }
 
 
-    private void updateContactName(String names) {
+    public void updateContactName(String names) {
         try {
-            contactLogic.updateContactName(names);
+            String[] split = names.split(" ");
+            String oldName = split[0];
+            String newName = split[1];
+            validateContactName(newName);
+            contactDao.update(oldName, newName);
+            observerOperator.notifyObserver();
         } catch (WrongNameException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void updateContactDescription(String input) {
-        contactLogic.updateContactDescription(input);
+    public void updateContactDescription(String input) {
+        String[] split = input.split(" ");
+        String name = split[0];
+        String description = input.substring(split[0].length() + 1, input.length());
+        contactDao.updateContactDescription(name, description);
+        observerOperator.notifyObserver();
     }
 
-    private void deleteContact(String name) {
-        contactLogic.deleteContact(name);
+    public void deleteContact(String name) {
+        contactDao.delete(name);
+        observerOperator.notifyObserver();
     }
 
-    private void addGroupToContact(String data) {
-        contactLogic.addGroupInContact(data);
+    public void addGroupToContact(String data) {
+        String[] split = data.split(" ");
+        String name = split[0];
+        String group = data.substring(split[0].length() + 1, data.length());
+        contactDao.updateContactGroup(name, group);
+        observerOperator.notifyObserver();
     }
 
-    private void removeGroupFromContact(String data) {
-        contactLogic.removeGroupFromContact(data);
+    public void removeGroupFromContact(String data) {
+        String[] split = data.split(" ");
+        String name = split[0];
+        String group = data.substring(split[0].length() + 1, data.length());
+        contactDao.removeGroupFromContact(name, group);
+        observerOperator.notifyObserver();
     }
 
-    private void showAllMembersOfAGroup(String name) {
-        for (Contact contact : contactLogic.getAllMembersOfAGroup(name)) {
+    public void showAllMembersOfAGroup(String name) {
+        for (Contact contact : contactDao.getAllMembersOfAGroup(name)) {
             System.out.println(contact.toString());
         }
     }
 
-    private void createGroup(String name) {
+    public void createGroup(String name) {
         try {
-            groupLogic.createGroup(name);
+            validateGroupName(name);
+            groupDao.create(new Group(name));
         } catch (WrongNameException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void printAllGroups() {
-        for (Group group : groupLogic.getAllGroups()) {
+    public void printAllGroups() {
+        for (Group group : groupDao.getAll()) {
             System.out.println(group.toString());
         }
     }
 
-    private void deleteGroup(String name) {
-        groupLogic.deleteGroup(name);
+    public void deleteGroup(String groupName) {
+        for (Contact contact : contactDao.getAll()) {
+            contactDao.removeGroupFromContact(contact.getName(), groupName);
+        }
+        groupDao.delete(groupName);
+        observerOperator.notifyObserver();
     }
 
-    private void updateGroup(String names) {
+    public void updateGroup(String names) {
         try {
-            groupLogic.updateGroup(names);
+            String[] split = names.split(" ");
+            String oldName = split[0];
+            String newName = split[1];
+            validateGroupName(newName);
+            groupDao.update(oldName, newName);
+            observerOperator.notifyObserver();
         } catch (WrongNameException e) {
             System.out.println(e.getMessage());
         }
     }
+
+    private void validateGroupName(String name) throws WrongNameException {
+        if (!(name.length() < 20) && (name.length() > 0)) {
+            throw new WrongNameException("wrong name: [" + name + "] it is too big");
+        }
+    }
+
+    private void validateContactName(String name) throws WrongNameException {
+        if (!(name.length() < 40) && (name.length() > 0)) {
+            throw new WrongNameException("wrong name: [" + name + "] it is too big");
+        }
+    }
+
 }

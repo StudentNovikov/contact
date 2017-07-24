@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contact implements Serializable{
+public class Contact implements Serializable {
 
     private int Id;
     private String name;
     private String description;
     private List<Group> groups;
 
-    Contact(String name, String description) {
+    public Contact(String name, String description) {
         setName(name);
         setDescription(description);
         groups = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Contact implements Serializable{
                 contactGroupName = contactGroupName + " " + s.getName();
             }
         }
-        return ("Contact id : " + getId() + " , name : " + getName()  +
+        return ("Contact id : " + getId() + " , name : " + getName() +
                 " , groups : " + contactGroupName) + " , description : " + getDescription();
 
     }
