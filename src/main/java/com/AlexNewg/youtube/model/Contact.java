@@ -57,8 +57,8 @@ public class Contact implements Serializable{
                 contactGroupName = contactGroupName + " " + s.getName();
             }
         }
-        return ("Contact id : " + getId() + " , name : " + getName() + " , description : " + getDescription() +
-                " , groups : " + contactGroupName);
+        return ("Contact id : " + getId() + " , name : " + getName()  +
+                " , groups : " + contactGroupName) + " , description : " + getDescription();
 
     }
 

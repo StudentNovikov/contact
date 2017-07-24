@@ -18,9 +18,9 @@ public class ContactDao implements IDao<Contact> {
     }
 
     public Contact readContact(String name) {
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getName().equals(name)) {
-                return allContacts.get(i);
+        for (Contact allContact : allContacts) {
+            if (allContact.getName().equals(name)) {
+                return allContact;
             }
         }
         return null;
@@ -41,18 +41,18 @@ public class ContactDao implements IDao<Contact> {
     }
 
     public void update(String oldName, String newName) {
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getName().equals(oldName)) {
-                allContacts.get(i).setName(newName);
+        for (Contact allContact : allContacts) {
+            if (allContact.getName().equals(oldName)) {
+                allContact.setName(newName);
                 return;
             }
         }
     }
 
     public void updateContactDescription(String name, String description) {
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getName().equals(name)) {
-                allContacts.get(i).setDescription(description);
+        for (Contact allContact : allContacts) {
+            if (allContact.getName().equals(name)) {
+                allContact.setDescription(description);
                 return;
             }
         }
@@ -68,11 +68,11 @@ public class ContactDao implements IDao<Contact> {
     }
 
     public void updateContactGroup(String name, String group) {
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getName().equals(name)) {
+        for (Contact allContact : allContacts) {
+            if (allContact.getName().equals(name)) {
                 if (doesThisGroupExists(group) >= 0) {
-                    if (!isGroupAlreadyInContact(allContacts.get(i), group)) {
-                        allContacts.get(i).addGroup(allGroups.get(doesThisGroupExists(group)));
+                    if (!isGroupAlreadyInContact(allContact, group)) {
+                        allContact.addGroup(allGroups.get(doesThisGroupExists(group)));
                         return;
                     }
                 }
@@ -91,8 +91,8 @@ public class ContactDao implements IDao<Contact> {
 
     private boolean isGroupAlreadyInContact(Contact contact, String group) {
         List<Group> groups = contact.getGroups();
-        for (int i = 0; i < groups.size(); i++) {
-            if (groups.get(i).getName().equals(group)) {
+        for (Group group1 : groups) {
+            if (group1.getName().equals(group)) {
                 return true;
             }
         }
@@ -100,9 +100,9 @@ public class ContactDao implements IDao<Contact> {
     }
 
     public void removeGroupFromContact(String name, String group) {
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getName().equals(name)) {
-                List<Group> groups = allContacts.get(i).getGroups();
+        for (Contact allContact : allContacts) {
+            if (allContact.getName().equals(name)) {
+                List<Group> groups = allContact.getGroups();
                 for (int j = 0; j < groups.size(); j++) {
                     if (groups.get(j).getName().equals(group)) {
                         groups.remove(j);
@@ -115,11 +115,11 @@ public class ContactDao implements IDao<Contact> {
 
     public List<Contact> getAllMembersOfAGroup(String name) {
         List<Contact> contacts = new ArrayList<>();
-        for (int i = 0; i < allContacts.size(); i++) {
-            List<Group> groups = allContacts.get(i).getGroups();
+        for (Contact allContact : allContacts) {
+            List<Group> groups = allContact.getGroups();
             for (Group group : groups) {
                 if (group.getName().equals(name)) {
-                    contacts.add(allContacts.get(i));
+                    contacts.add(allContact);
                 }
             }
         }

@@ -16,9 +16,9 @@ public class GroupDao implements IDao<Group> {
 
     public void update(String oldName, String newName) {
 
-        for (int i = 0; i < allGroups.size(); i++) {
-            if (allGroups.get(i).getName().equals(oldName)) {
-                allGroups.get(i).setName(newName);
+        for (Group allGroup : allGroups) {
+            if (allGroup.getName().equals(oldName)) {
+                allGroup.setName(newName);
             }
         }
     }

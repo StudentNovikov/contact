@@ -1,0 +1,7 @@
+All contacts:
+Contact id : 1 , name : Alex , groups :  job , description : this is me actually
+Contact id : 2 , name : Josh , groups :  friend , description : he likes csgo
+Contact id : 3 , name : Mika , groups :  friend , description : she is lovely and i am ugly
+Contact id : 4 , name : SuperRazor , groups :  , description : he needs a new haircut
+Contact id : 5 , name : Regina , groups :  job , description : yep, Dubovicki here
+Contact id : 6 , name : Brandon , groups :  family , description : he is a gan...bad guy

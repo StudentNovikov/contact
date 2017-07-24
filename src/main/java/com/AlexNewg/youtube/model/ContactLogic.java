@@ -1,10 +1,8 @@
 package com.AlexNewg.youtube.model;
 
-
 import com.AlexNewg.youtube.dao.DaoFactory;
 import com.AlexNewg.youtube.view.WrongNameException;
 import com.AlexNewg.youtube.dao.ContactDao;
-import com.AlexNewg.youtube.model.Contact;
 
 import java.util.List;
 

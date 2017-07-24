@@ -4,10 +4,7 @@ import com.AlexNewg.youtube.model.ContactLogic;
 import com.AlexNewg.youtube.model.GroupLogic;
 import com.AlexNewg.youtube.model.Contact;
 import com.AlexNewg.youtube.model.Group;
-import com.AlexNewg.youtube.view.ConsoleMessages;
-import com.AlexNewg.youtube.view.View;
-
-import com.AlexNewg.youtube.view.WrongNameException;
+import com.AlexNewg.youtube.view.*;
 
 public class Controller {
 
@@ -15,13 +12,16 @@ public class Controller {
     private View view = new View(instance);
     private ContactLogic contactLogic = new ContactLogic();
     private GroupLogic groupLogic = new GroupLogic();
+    private ObserverOperator observerOperator ;
 
-    private Controller() {
+
+    private Controller(ObserverOperator observerOperator) {
+        this.observerOperator = observerOperator;
     }
 
-    public static Controller getInstance() {
+    public static Controller getInstance(ObserverOperator observerOperator) {
         if (instance == null) {
-            instance = new Controller();
+            instance = new Controller(observerOperator);
         }
         return instance;
     }
@@ -38,22 +38,27 @@ public class Controller {
                 break;
             case "3":
                 System.out.println(ConsoleMessages.UPDATE_CONTACT_DESCRIPTION);
+                printAllContacts();
                 updateContactDescription(view.readConsoleString());
+                observerOperator.notifyObserver();
                 break;
             case "4":
                 System.out.println(ConsoleMessages.DELETE_CONTACT);
                 printAllContacts();
                 deleteContact(view.readConsoleString());
+                observerOperator.notifyObserver();
                 break;
             case "5":
                 System.out.println(ConsoleMessages.ADD_GROUP_TO_CONTACT);
                 printAllContacts();
                 addGroupToContact(view.readConsoleString());
+                observerOperator.notifyObserver();
                 break;
             case "6":
                 System.out.println(ConsoleMessages.REMOVE_GROUP_FROM_CONTACT);
                 printAllContacts();
                 removeGroupFromContact(view.readConsoleString());
+                observerOperator.notifyObserver();
                 break;
             case "7":
                 System.out.println(ConsoleMessages.DETAILED_CONTACT);
@@ -63,6 +68,7 @@ public class Controller {
             case "8":
                 System.out.println(ConsoleMessages.CREATE_CONTACT);
                 createContact(view.readConsoleString());
+                observerOperator.notifyObserver();
                 break;
             case "9":
                 System.out.println(ConsoleMessages.SHOW_ALL_MEMBERS_OF_A_GROUP);
@@ -73,6 +79,7 @@ public class Controller {
                 System.out.println(ConsoleMessages.UPDATE_CONTACT_NAME);
                 printAllContacts();
                 updateContactName(view.readConsoleString());
+                observerOperator.notifyObserver();
                 break;
             case "11":
                 System.out.println(ConsoleMessages.CREATE_GROUP);
