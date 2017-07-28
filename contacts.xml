@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <contacts>
-   <contact id="1">
-      <name>Alex</name>
-	  <description>its me actually</description>
-	  <groupId>2</groupId>
-   </contact>
-   <contact id="2">
-      <name>Josh</name>
-	  <description>he is cool</description>
-	  <groupId>3</groupId>
-   </contact>
-   <contact id="3">
-      <name>Mika</name>
-	  <description>maybe I like her</description>
-	  <groupId>1</groupId>
-   </contact>
- </contacts>
+    <contact id="1">
+        <name>Alex</name>
+        <description>its me actually</description>
+        <groupId>2</groupId>
+    </contact>
+    <contact id="2">
+        <name>Josh</name>
+        <description>he is cool</description>
+        <groupId>3</groupId>
+    </contact>
+    <contact id="3">
+        <name>Mika</name>
+        <description>maybe I like her</description>
+        <groupId>1</groupId>
+    </contact>
+</contacts>
