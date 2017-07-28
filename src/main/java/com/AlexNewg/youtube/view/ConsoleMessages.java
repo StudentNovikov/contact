@@ -18,6 +18,12 @@ final class ConsoleMessages {
             " 13. Update an existing group" + "\n" +
             " 0. Exit ";
 
+    static final String CHOOSE_PARSING_TYPE = "Choose the parsing method tou want to use:" + "\n" +
+            " 1. DOM " + "\n" +
+            " 2. SAX " + "\n" +
+            " 3. Jackson " + "\n" +
+            " 4. Default " + "\n";
+
     static final String SHOW_ALL_MEMBERS_OF_A_GROUP = "Choose the name of a group, which members you want to see";
     static final String REMOVE_GROUP_FROM_CONTACT = "Choose the name of a contact, then after space the group you want to delete";
     static final String ADD_GROUP_TO_CONTACT = "Choose the name of a contact, then after space type what group to add for it";

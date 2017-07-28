@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<groups>
+   <group id="1">
+      <name>job</name>
+   </group>
+   <group id="2">
+      <name>family</name>
+   </group>
+   <group id="3">
+      <name>friend</name>
+   </group>
+ </groups>
