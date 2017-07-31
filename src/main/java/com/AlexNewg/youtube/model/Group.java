@@ -10,6 +10,11 @@ public class Group implements Serializable {
         setName(name);
     }
 
+    public Group(int id , String name) {
+        setName(name);
+        setId(id);
+    }
+
     public int getId() {
         return Id;
     }

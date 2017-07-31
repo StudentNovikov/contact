@@ -119,6 +119,7 @@ public class Controller {
         for (Group group : groupDao.getAll()) {
             System.out.println(group.toString());
         }
+
     }
 
     public void deleteGroup(String groupName) {

@@ -1,7 +1,6 @@
-<?xml version="1.0"?>
-<groups>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><groups>
     <group id="1">
-        <name>job</name>
+        <name>work</name>
     </group>
     <group id="2">
         <name>family</name>
@@ -9,4 +8,4 @@
     <group id="3">
         <name>friend</name>
     </group>
-</groups>
+<group id="4"><name>fun</name></group></groups>
