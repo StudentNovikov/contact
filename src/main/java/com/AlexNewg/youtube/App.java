@@ -37,5 +37,7 @@ public class App {
             System.out.println(group.toString());
         }
         test.create("fun");
+        test.create("superFun");
+        test.delete("superFun");
     }
 }

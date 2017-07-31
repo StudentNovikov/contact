@@ -93,11 +93,7 @@ public class GroupDaoDOM {
     }
 
     public void create(String groupName) {
-//        group.setId(getMaxGroupId());
-//        allGroups.add(group);
-//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
 
         try {
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
@@ -119,11 +115,6 @@ public class GroupDaoDOM {
             g.appendChild(p);
            // nameNodes.item(0).getParentNode().getParentNode().insertBefore(g, nameNodes.item(3).getParentNode().getNextSibling());
             nameNodes.item(0).getParentNode().getParentNode().appendChild(g);
-
-
-
-
-
 
             Transformer tr = TransformerFactory.newInstance().newTransformer();
             // send DOM to file
@@ -148,13 +139,34 @@ public class GroupDaoDOM {
     }
 
 
-    public void delete(String name) {
-        for (int i = 0; i < allGroups.size(); i++) {
-            if (allGroups.get(i).getName().equals(name)) {
-                allGroups.remove(i--);
-            }
-        }
+    public void delete(String groupName) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
+        try {
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+
+            Document doc = documentBuilder.parse("groups.xml");
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            XPathExpression expression = xPath.compile("//group//text()");
+
+            NodeList nameNodes = (NodeList) expression.evaluate(doc, XPathConstants.NODESET);
+            for (int i = 0; i < nameNodes.getLength(); i++) {
+                String name = nameNodes.item(i).getNodeValue();
+                if (name.equals(groupName)) {
+                    nameNodes.item(i).getParentNode().getParentNode().getParentNode().removeChild(nameNodes.item(i).getParentNode().getParentNode());
+                    break;
+                }
+            }
+
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            // send DOM to file
+            tr.transform(new DOMSource(doc),
+                    new StreamResult(new FileOutputStream("groups.xml")));
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+            System.out.println(e.getMessage());
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 
 
