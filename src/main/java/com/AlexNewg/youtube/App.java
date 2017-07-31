@@ -48,5 +48,6 @@ public class App {
             System.out.println(contact.toString());
         }
 
+        test.create("KOOKO","does this works?","2 1");
     }
 }

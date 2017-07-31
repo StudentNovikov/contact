@@ -36,5 +36,4 @@ public class Group implements Serializable {
         return ("Group Id : " + getId() + " , name : " + getName());
     }
 
-
 }
