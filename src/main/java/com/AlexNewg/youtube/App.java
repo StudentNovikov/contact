@@ -1,8 +1,10 @@
 package com.AlexNewg.youtube;
 
 import com.AlexNewg.youtube.controller.Controller;
+import com.AlexNewg.youtube.dao.ContactDaoDOM;
 import com.AlexNewg.youtube.dao.GroupDaoDOM;
 import com.AlexNewg.youtube.dao.XmlValidator;
+import com.AlexNewg.youtube.model.Contact;
 import com.AlexNewg.youtube.model.Group;
 import com.AlexNewg.youtube.view.ObserverOperator;
 import com.AlexNewg.youtube.view.View;
@@ -27,17 +29,24 @@ public class App {
 //        View view = new View(Controller.getInstance(observerOperator));
 //        view.start();
 
-        GroupDaoDOM test = new GroupDaoDOM();
+//        GroupDaoDOM test = new GroupDaoDOM();
+//        test.initData();
+//        for (Group group : test.getAllGroups()){
+//            System.out.println(group.toString());
+//        }
+//        test.update("job","work");
+//        for (Group group : test.getAllGroups()){
+//            System.out.println(group.toString());
+//        }
+//        test.create("fun");
+//        test.create("superFun");
+//        test.delete("superFun");
+
+        ContactDaoDOM test = new ContactDaoDOM();
         test.initData();
-        for (Group group : test.getAllGroups()){
-            System.out.println(group.toString());
+        for (Contact contact : test.getAllContacts()){
+            System.out.println(contact.toString());
         }
-        test.update("job","work");
-        for (Group group : test.getAllGroups()){
-            System.out.println(group.toString());
-        }
-        test.create("fun");
-        test.create("superFun");
-        test.delete("superFun");
+
     }
 }

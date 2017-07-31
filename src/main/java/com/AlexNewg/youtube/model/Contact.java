@@ -17,6 +17,18 @@ public class Contact implements Serializable {
         groups = new ArrayList<>();
     }
 
+    public Contact(int id, String name, String description, String groupIds) {
+        setId(id);
+        setName(name);
+        setDescription(description);
+        this.groups = new ArrayList<>();
+        String[] parts = groupIds.split(" ");
+        for (String group : parts) {
+            this.groups.add(new Group(group));
+        }
+
+    }
+
     public void setId(int id) {
         this.Id = id;
     }

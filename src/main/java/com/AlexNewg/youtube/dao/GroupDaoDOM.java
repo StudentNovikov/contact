@@ -3,16 +3,12 @@ package com.AlexNewg.youtube.dao;
 import com.AlexNewg.youtube.model.Group;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.*;
-
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,11 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GroupDaoDOM {
 
     private List<Group> allGroups = new ArrayList<>();
-
 
     public List<Group> getAllGroups() {
         allGroups.clear();
@@ -61,10 +55,8 @@ public class GroupDaoDOM {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-
         try {
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-
             Document doc = documentBuilder.parse("groups.xml");
             XPath xPath = XPathFactory.newInstance().newXPath();
             XPathExpression expression = xPath.compile("//group/name//text()");
@@ -80,8 +72,6 @@ public class GroupDaoDOM {
             }
 
             Transformer tr = TransformerFactory.newInstance().newTransformer();
-
-
             // send DOM to file
             tr.transform(new DOMSource(doc),
                     new StreamResult(new FileOutputStream("groups.xml")));
@@ -100,20 +90,19 @@ public class GroupDaoDOM {
 
             Document doc = documentBuilder.parse("groups.xml");
             XPath xPath = XPathFactory.newInstance().newXPath();
-            //XPathExpression expression = xPath.compile("//group/name//text()");
             XPathExpression expression = xPath.compile("//group//text()");
 
             NodeList nameNodes = (NodeList) expression.evaluate(doc, XPathConstants.NODESET);
 
             //trying to insert
             Element g = doc.createElement("group");
-            int maxId =  getMaxGroupId();
-            g.setAttribute("id",Integer.toString(maxId));
+            int maxId = getMaxGroupId();
+            g.setAttribute("id", Integer.toString(maxId));
             Text a = doc.createTextNode(groupName);
             Element p = doc.createElement("name");
             p.appendChild(a);
             g.appendChild(p);
-           // nameNodes.item(0).getParentNode().getParentNode().insertBefore(g, nameNodes.item(3).getParentNode().getNextSibling());
+            // nameNodes.item(0).getParentNode().getParentNode().insertBefore(g, nameNodes.item(3).getParentNode().getNextSibling());
             nameNodes.item(0).getParentNode().getParentNode().appendChild(g);
 
             Transformer tr = TransformerFactory.newInstance().newTransformer();
@@ -127,7 +116,6 @@ public class GroupDaoDOM {
         }
 
     }
-
 
 
     private int getMaxGroupId() {

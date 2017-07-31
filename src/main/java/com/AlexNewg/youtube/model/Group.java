@@ -35,4 +35,6 @@ public class Group implements Serializable {
     public String toString() {
         return ("Group Id : " + getId() + " , name : " + getName());
     }
+
+
 }
