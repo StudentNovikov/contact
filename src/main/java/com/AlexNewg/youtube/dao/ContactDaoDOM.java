@@ -2,10 +2,7 @@ package com.AlexNewg.youtube.dao;
 
 import com.AlexNewg.youtube.model.Contact;
 import com.AlexNewg.youtube.model.Group;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -62,7 +59,7 @@ public class ContactDaoDOM {
         }
     }
 
-    public void create(String contactName,String contactDescription, String contactGroups) {
+    public void create(String contactName, String contactDescription, String contactGroups) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         try {
@@ -110,7 +107,7 @@ public class ContactDaoDOM {
     }
 
     private int getMaxContactId() {
-        initData();
+        getAllContacts();
         if (allContacts.isEmpty()) {
             return 1;
         }
@@ -119,38 +116,102 @@ public class ContactDaoDOM {
 
 
     public Contact readContact(String name) {
-        for (Contact allContact : allContacts) {
-            if (allContact.getName().equals(name)) {
-                return allContact;
+        for (Contact c : getAllContacts()
+                ) {
+            if (c.getName().equals(name)) {
+                return c;
             }
         }
         return null;
     }
 
     public void update(String oldName, String newName) {
-        for (Contact allContact : allContacts) {
-            if (allContact.getName().equals(oldName)) {
-                allContact.setName(newName);
-                return;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        try {
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document doc = documentBuilder.parse("contacts.xml");
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            XPathExpression expression = xPath.compile("//contact/name//text()");
+
+            NodeList nameNodes = (NodeList) expression.evaluate(doc, XPathConstants.NODESET);
+
+            for (int i = 0; i < nameNodes.getLength(); i++) {
+                String name = nameNodes.item(i).getNodeValue();
+                if (name.equals(oldName)) {
+                    nameNodes.item(i).setNodeValue(newName);
+                    break;
+                }
             }
+
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            // send DOM to file
+            tr.transform(new DOMSource(doc),
+                    new StreamResult(new FileOutputStream("contacts.xml")));
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+            System.out.println(e.getMessage());
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
 
     public void updateContactDescription(String name, String description) {
-        for (Contact allContact : allContacts) {
-            if (allContact.getName().equals(name)) {
-                allContact.setDescription(description);
-                return;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        try {
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document doc = documentBuilder.parse("contacts.xml");
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            XPathExpression expression = xPath.compile("//contact/name//text()");
+
+            NodeList nameNodes = (NodeList) expression.evaluate(doc, XPathConstants.NODESET);
+
+            for (int i = 0; i < nameNodes.getLength(); i++) {
+                String currentName = nameNodes.item(i).getNodeValue();
+                if (currentName.equals(name)) {
+                    nameNodes.item(i).getParentNode().getParentNode().getChildNodes().item(1).getChildNodes().item(0).setNodeValue(description);
+                    break;
+                }
             }
+
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            // send DOM to file
+            tr.transform(new DOMSource(doc),
+                    new StreamResult(new FileOutputStream("contacts.xml")));
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+            System.out.println(e.getMessage());
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
 
-    public void delete(String name) {
-        for (int i = 0; i < allContacts.size(); i++) {
-            if (allContacts.get(i).getName().equals(name)) {
-                allContacts.remove(i);
-                return;
+    public void delete(String contactName) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        try {
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+
+            Document doc = documentBuilder.parse("contacts.xml");
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            XPathExpression expression = xPath.compile("//contact//text()");
+
+            NodeList nameNodes = (NodeList) expression.evaluate(doc, XPathConstants.NODESET);
+            for (int i = 0; i < nameNodes.getLength(); i++) {
+                String name = nameNodes.item(i).getNodeValue();
+                if (name.equals(contactName)) {
+                    nameNodes.item(i).getParentNode().getParentNode().getParentNode().removeChild(nameNodes.item(i).getParentNode().getParentNode());
+                    break;
+                }
             }
+
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            // send DOM to file
+            tr.transform(new DOMSource(doc),
+                    new StreamResult(new FileOutputStream("contacts.xml")));
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+            System.out.println(e.getMessage());
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -188,20 +249,40 @@ public class ContactDaoDOM {
     }
 
     public void removeGroupFromContact(String name, String group) {
-        for (Contact allContact : allContacts) {
-            if (allContact.getName().equals(name)) {
-                List<Group> groups = allContact.getGroups();
-                for (int j = 0; j < groups.size(); j++) {
-                    if (groups.get(j).getName().equals(group)) {
-                        groups.remove(j);
-                        return;
-                    }
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        try {
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document doc = documentBuilder.parse("contacts.xml");
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            XPathExpression expression = xPath.compile("//contact/name//text()");
+
+            NodeList nameNodes = (NodeList) expression.evaluate(doc, XPathConstants.NODESET);
+
+            for (int i = 0; i < nameNodes.getLength(); i++) {
+                String currentName = nameNodes.item(i).getNodeValue();
+                if (currentName.equals(name)) {
+                    String before = nameNodes.item(i).getParentNode().getParentNode().getChildNodes().item(2).getChildNodes().item(0).getNodeValue();
+                    //String before = nameNodes.item(i).getNextSibling().getNextSibling().getNodeValue();
+                    System.out.println(before);
+                    break;
                 }
             }
+
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            // send DOM to file
+            tr.transform(new DOMSource(doc),
+                    new StreamResult(new FileOutputStream("contacts.xml")));
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+            System.out.println(e.getMessage());
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
 
+
     public List<Contact> getAllMembersOfAGroup(String name) {
+        getAllContacts();
         List<Contact> contacts = new ArrayList<>();
         for (Contact allContact : allContacts) {
             List<Group> groups = allContact.getGroups();
@@ -213,4 +294,21 @@ public class ContactDaoDOM {
         }
         return contacts;
     }
+
+    private String removeGroup(String allGroups, String groupName) {
+        String[] parts = allGroups.split(" ");
+        String result = "";
+        for (String s : parts) {
+            if (!s.equals(groupName)) {
+                if (result.length() == 0) {
+                    result = s;
+                } else {
+                    result = result + " " + s;
+                }
+            }
+        }
+
+        return result;
+    }
+
 }

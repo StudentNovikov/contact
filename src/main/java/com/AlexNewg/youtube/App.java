@@ -29,7 +29,7 @@ public class App {
 //        View view = new View(Controller.getInstance(observerOperator));
 //        view.start();
 
-//        GroupDaoDOM test = new GroupDaoDOM();
+        GroupDaoDOM test2 = new GroupDaoDOM();
 //        test.initData();
 //        for (Group group : test.getAllGroups()){
 //            System.out.println(group.toString());
@@ -38,10 +38,10 @@ public class App {
 //        for (Group group : test.getAllGroups()){
 //            System.out.println(group.toString());
 //        }
-//        test.create("fun");
-//        test.create("superFun");
-//        test.delete("superFun");
-
+//       test2.create("fun");
+//        test2.create("superFun");
+////        test.delete("superFun");
+//
         ContactDaoDOM test = new ContactDaoDOM();
         test.initData();
         for (Contact contact : test.getAllContacts()){
@@ -49,5 +49,12 @@ public class App {
         }
 
         test.create("KOOKO","does this works?","2 1");
+        test.update("KOOKO","newKOKO");
+        test.updateContactDescription("newKOKO","new description :))))");
+        test.create("KOOKO1","does this works?","2 1");
+        test.create("KOOKO2","does this works?","2 1");
+
+        test.delete("KOOKO1");
+
     }
 }

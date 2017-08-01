@@ -119,7 +119,7 @@ public class GroupDaoDOM {
 
 
     private int getMaxGroupId() {
-        initData();
+        getAllGroups();
         if (allGroups.isEmpty()) {
             return 1;
         }
